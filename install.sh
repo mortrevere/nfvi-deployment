@@ -1,5 +1,5 @@
-apt-get update
-apt-get upgrade
+apt update
+apt -y upgrade
 apt -y install dfc htop nano software-properties-common net-tools iproute iputils-ping iperf tcpdump netcat
 
 echo 'root:root' |chpasswd
