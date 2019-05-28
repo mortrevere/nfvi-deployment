@@ -1,6 +1,7 @@
 #!/bin/bash
 
-currentdir=$(pwd)
+SCRIPT=$(readlink -f "$0")
+currentdir=$(dirname "$SCRIPT")
 
 while true; do
 
