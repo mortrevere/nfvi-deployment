@@ -19,4 +19,4 @@ add-apt-repository -y cloud-archive:stein
 apt update
 apt -y install python-openstackclient
 
-nohup ./heartbeart.sh > /dev/null 2>&1 &
+nohup ./heartbeat.sh > /dev/null 2>&1 &
