@@ -1,5 +1,7 @@
 #!/bin/bash
 
+currentdir=$(pwd)
+
 if [ "$EUID" -ne 0 ]
   then echo "This needs to be run as root"
   exit
@@ -19,4 +21,7 @@ add-apt-repository -y cloud-archive:stein
 apt update
 apt -y install python-openstackclient
 
-nohup ./heartbeat.sh > /dev/null 2>&1 &
+echo "${currentdir}/heartbeat.sh &" >> /etc/rc.local
+chmod +x /etc/rc.local
+
+reboot
