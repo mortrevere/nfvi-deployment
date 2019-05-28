@@ -18,3 +18,5 @@ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDdwLcy4I1WBVCqTrhku3uVQ/bbXoatNuOm0k
 add-apt-repository -y cloud-archive:stein
 apt update
 apt -y install python-openstackclient
+
+nohup ./heartbeart.sh > /dev/null 2>&1 &
