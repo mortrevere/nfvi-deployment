@@ -9,7 +9,7 @@ fi
 
 apt update
 apt -y upgrade
-apt -y install dfc htop nano software-properties-common net-tools iproute iputils-ping iperf tcpdump netcat
+apt -y install dfc htop nano software-properties-common net-tools iproute iputils-ping iperf tcpdump netcat ifupdown
 
 echo 'root:root' |chpasswd
 sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
@@ -26,4 +26,25 @@ apt -y install python-openstackclient
 apt -y purge ureadahead
 echo "nameserver 208.67.222.222" >> /etc/resolv.conf
 echo "nameserver 208.67.220.220" >> /etc/resolv.conf
+
+cat <<EOF > /etc/network/interfaces
+auto lo
+iface lo inet loopback
+
+allow-hotplug eno1
+auto eno1
+#iface eno1 inet static
+#netmask 255.255.255.0
+#address 192.168.0.10
+EOF
+
+ifdown --force eno1 lo && ifup -a
+systemctl unmask networking
+systemctl enable networking
+systemctl restart networking
+systemctl stop systemd-networkd.socket systemd-networkd networkd-dispatcher systemd-networkd-wait-online
+systemctl disable systemd-networkd.socket systemd-networkd networkd-dispatcher systemd-networkd-wait-online
+systemctl mask systemd-networkd.socket systemd-networkd networkd-dispatcher systemd-networkd-wait-online
+apt-get --assume-yes purge nplan netplan.io
+
 reboot
