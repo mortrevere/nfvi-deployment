@@ -7,6 +7,8 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+IDN=$(cut -d '-' -f2 <<< $(hostname))
+
 apt update
 apt -y upgrade
 apt -y install dfc htop nano software-properties-common net-tools iproute iputils-ping iperf tcpdump netcat
@@ -30,9 +32,10 @@ network:
   version: 2
   renderer: networkd
   ethernets:
-    eno0:
+    eno1:
+      dhcp4: no
       addresses:
-        - 192.168.1.10/24
+        - 192.168.1.$IDN/24
       gateway4: 192.168.1.79
       nameservers:
           addresses: [208.67.222.222, 208.67.220.220]
@@ -40,5 +43,5 @@ network:
 EOF
 netplan apply
 
-read -rsn1 -p"Press any key to reboot";echo
+read -rsn1 -p"Press any key to reboot or Ctrl-C to keep going";echo
 reboot
