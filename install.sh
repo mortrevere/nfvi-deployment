@@ -43,5 +43,5 @@ network:
 EOF
 netplan apply
 
-read -rsn1 -p"Press any key to reboot or Ctrl-C to keep going";echo
+read -rsn1 -t 10 -p"Press Ctrl-C or reboot in 10 sec ...";echo
 reboot
