@@ -35,7 +35,7 @@ network:
     eno1:
       dhcp4: no
       addresses:
-        - 192.168.1.$IDN/24
+        - 192.168.1.1$IDN/24
       gateway4: 192.168.1.79
       nameservers:
           addresses: [208.67.222.222, 208.67.220.220]
