@@ -7,6 +7,9 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+echo "nameserver 208.67.222.222" >> /etc/resolv.conf
+echo "nameserver 208.67.220.220" >> /etc/resolv.conf
+
 apt update
 apt -y upgrade
 apt -y install dfc htop nano software-properties-common net-tools iproute iputils-ping iperf tcpdump netcat ifupdown
@@ -24,8 +27,6 @@ apt -y install python-openstackclient
 (echo "@reboot ${currentdir}/heartbeat.sh &") | crontab -
 
 apt -y purge ureadahead
-echo "nameserver 208.67.222.222" >> /etc/resolv.conf
-echo "nameserver 208.67.220.220" >> /etc/resolv.conf
 
 cat <<EOF > /etc/network/interfaces
 auto lo
