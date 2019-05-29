@@ -7,12 +7,9 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-echo "nameserver 208.67.222.222" >> /etc/resolv.conf
-echo "nameserver 208.67.220.220" >> /etc/resolv.conf
-
 apt update
 apt -y upgrade
-apt -y install dfc htop nano software-properties-common net-tools iproute iputils-ping iperf tcpdump netcat ifupdown
+apt -y install dfc htop nano software-properties-common net-tools iproute iputils-ping iperf tcpdump netcat
 
 echo 'root:root' |chpasswd
 sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
@@ -28,24 +25,20 @@ apt -y install python-openstackclient
 
 apt -y purge ureadahead
 
-cat <<EOF > /etc/network/interfaces
-auto lo
-iface lo inet loopback
+cat <<EOF > /etc/netplan/99_config.yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eno0:
+      addresses:
+        - 192.168.1.10/24
+      gateway4: 192.168.1.79
+      nameservers:
+          addresses: [208.67.222.222, 208.67.220.220]
 
-allow-hotplug eno1
-auto eno1
-#iface eno1 inet static
-#netmask 255.255.255.0
-#address 192.168.0.10
 EOF
+netplan apply
 
-ifdown --force eno1 lo && ifup -a
-systemctl unmask networking
-systemctl enable networking
-systemctl restart networking
-systemctl stop systemd-networkd.socket systemd-networkd networkd-dispatcher systemd-networkd-wait-online
-systemctl disable systemd-networkd.socket systemd-networkd networkd-dispatcher systemd-networkd-wait-online
-systemctl mask systemd-networkd.socket systemd-networkd networkd-dispatcher systemd-networkd-wait-online
-apt-get --assume-yes purge nplan netplan.io
-
+read -rsn1 -p"Press any key to reboot";echo
 reboot
