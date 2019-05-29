@@ -21,6 +21,8 @@ add-apt-repository -y cloud-archive:stein
 apt update
 apt -y install python-openstackclient
 
-(crontab -l 2>/dev/null; echo "@reboot ${currentdir}/heartbeat.sh &") | crontab -
+(echo "@reboot ${currentdir}/heartbeat.sh &") | crontab -
+
+apt -y purge ureadahead
 
 reboot
