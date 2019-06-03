@@ -1,7 +1,8 @@
 #!/bin/bash
 
-SCRIPT=$(readlink -f "$0")
-currentdir=$(dirname "$SCRIPT")
+currentdir=$(dirname $(readlink -f "$0"))
+
+${currentdir}/boot.sh
 
 while true; do
 
