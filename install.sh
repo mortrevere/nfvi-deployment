@@ -1,6 +1,6 @@
 #!/bin/bash
 
-currentdir=$(pwd)
+currentdir=$(dirname $(readlink -f "$0"))
 
 if [ "$EUID" -ne 0 ]
   then echo "This needs to be run as root"
@@ -11,7 +11,7 @@ IDN=$(cut -d '-' -f2 <<< $(hostname))
 
 apt update
 apt -y upgrade
-apt -y install dfc htop nano software-properties-common net-tools iproute iputils-ping iperf tcpdump netcat
+apt -y install dfc htop nano software-properties-common net-tools iproute iputils-ping iperf tcpdump netcat chrony
 
 echo 'root:root' |chpasswd
 sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
@@ -42,6 +42,8 @@ network:
 
 EOF
 netplan apply
+
+${currentdir}/timezone.sh
 
 read -rsn1 -t 10 -p"Press Ctrl-C or reboot in 10 sec ...";echo
 reboot
