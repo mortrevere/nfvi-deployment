@@ -16,7 +16,7 @@ echo "$processes"
 
 
 ws=$(netstat -lantp | grep 'LISTEN.*apache2' | awk '{print $4 " " $7}')
-wsc=$(echo "$ws" | wc -l)
+wsc=$(echo -n "$ws" | wc -l)
 echo "WEBSERVICES ${wsc}"
 echo "$ws"
 
