@@ -1,3 +1,2 @@
-pid=$(ps aux | grep 'nfvi-deployment/heartbeat' | grep -v grep | cut -d' ' -f7)
-kill -15 $pid
+ps -ef | grep -v grep | grep 'nfvi-deployment/heartbeat' | awk '{print $2}' | xargs kill -15
 /home/leo/nfvi-deployment/heartbeat.sh &
