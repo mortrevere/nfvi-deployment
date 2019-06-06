@@ -15,7 +15,7 @@ processesc=$(echo "$processes" | wc -l)
 echo "PROCESSES ${processesc}"
 echo "$processes"
 
-ws=$(netstat -lantp | grep -E '(LISTEN.*apache2|:80)' | awk '{print $4 " " $7}')
+ws=$(netstat -lantp | grep -E '(LISTEN.*apache2|:80)' | grep -v TIME_WAIT | awk '{print $4 " " $7}')
 wsc=$(echo "$ws" | sed '/^\s*$/d' | wc -l)
 echo "WEBSERVICES ${wsc}"
 echo "$ws"
