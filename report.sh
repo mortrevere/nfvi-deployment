@@ -8,7 +8,7 @@ ping -w 1 -c 1 8.8.8.8 > /dev/null && echo 'internet up' || echo 'internet down'
 ping -w 1 -c 1 google.fr > /dev/null && echo 'DNS up' || echo 'DNS down'
 free | grep Mem
 echo -n 'TEMP ' && cat /sys/class/thermal/thermal_zone*/temp | tr '\n' ' ' && echo ''
-
+echo -n 'CPU ' && ps -A -o pcpu | tail -n+2 | paste -sd+ | bc
 echo 'LANPING'
 cat /etc/hosts | cut -f1 | grep -Ev '#|127.0.' | xargs -L 1 ping -c1 -w1 2> /dev/null | grep -A 1 PING
 
