@@ -1,6 +1,6 @@
 git rev-parse HEAD
 hostname
-ip a | grep -E 'eno|192.168.1.255'
+ip a | grep -E 'eno|192.168.1.255' | grep -v 'DOWN'
 df -h | grep sda
 date +%R:%S
 uptime
