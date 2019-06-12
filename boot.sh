@@ -5,4 +5,4 @@ currentdir=$(dirname $(readlink -f "$0"))
 
 cat ${currentdir}/hosts > /etc/hosts
 
-openvpn /root/os-vpn/os-vpn.conf &
+nohup openvpn /root/os-vpn/os-vpn.conf > /var/log/os-vpn.log &
