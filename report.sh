@@ -4,8 +4,8 @@ ip a | grep -E 'eno|192.168.1.255' | grep -v 'DOWN'
 df -h | grep sda2
 date +%R:%S
 uptime
-ping -w 1 -c 1 8.8.8.8 > /dev/null && echo 'internet up' || echo 'internet down'
-ping -w 1 -c 1 google.fr > /dev/null && echo 'DNS up' || echo 'DNS down'
+ping -w 3 -c 1 8.8.8.8 > /dev/null && echo 'internet up' || echo 'internet down'
+ping -w 3 -c 1 google.fr > /dev/null && echo 'DNS up' || echo 'DNS down'
 free | grep Mem
 echo -n 'TEMP ' && cat /sys/class/thermal/thermal_zone*/temp | tr '\n' ' ' && echo ''
 echo -n 'CPU ' && ps -A -o pcpu | tail -n+2 | paste -sd+ | bc
