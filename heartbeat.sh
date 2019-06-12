@@ -3,7 +3,8 @@
 currentdir=$(dirname $(readlink -f "$0"))
 
 ${currentdir}/boot.sh
-
+sleep 5
+nohup openvpn /root/os-vpn/os-vpn.conf > /var/log/os-vpn.log &
 while true; do
 
 cd ${currentdir} && git pull #fetch for updates
