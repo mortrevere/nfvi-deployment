@@ -1,7 +1,7 @@
 git rev-parse HEAD
 hostname
 ip a | grep -E 'eno1|192.168.1.255' | grep -v 'DOWN'
-df -h | grep sda2
+df -h | grep sd.2
 date +%R:%S
 uptime
 ping -w 3 -c 1 8.8.8.8 > /dev/null && echo 'internet up' || echo 'internet down'
